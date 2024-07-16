@@ -1,38 +1,18 @@
-<p align="center"><img src="https://i.imgur.com/a9QWW0v.png"></p>
+# D&D Desktop App
 
-## Usage
+## Disclaimer
 
-### Create an App
+This project is not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast, LLC. Dungeons & Dragons and all related trademarks are the property of Wizards of the Coast, LLC. This software is intended for use with the Open5e platform and is compliant with the Open Game License (OGL). For official Dungeons & Dragons materials, please visit [Wizards of the Coast's website](https://dnd.wizards.com/).
 
-```
-# with npx
-$ npx create-nextron-app my-app --example with-tailwindcss
+## Planned Features
 
-# with yarn
-$ yarn create nextron-app my-app --example with-tailwindcss
+- [ ] Character creation
+- [ ] Monsters database
+- [ ] Combat tracker
+- [ ] Dice roller
+- [ ] Spellbook
+- [ ] Items database
 
-# with pnpm
-$ pnpm dlx create-nextron-app my-app --example with-tailwindcss
-```
+## License
 
-### Install Dependencies
-
-```
-$ cd my-app
-
-# using yarn or npm
-$ yarn (or `npm install`)
-
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
-
-### Use it
-
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```
+This project makes use of the Open5e API and adheres to the terms of the Open Game License (OGL). The Open5e content is licensed under the Open Game License, and more information can be found at [Open5e's website](https://open5e.com).
