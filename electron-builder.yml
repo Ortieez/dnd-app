@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: sqlite-demo
+appId: com.dnd-app
+productName: dnd-app
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: sqlite-demo
+  executableName: dnd-app
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

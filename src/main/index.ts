@@ -15,7 +15,7 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
-    }
+    },
   })
 
   mainWindow.on('ready-to-show', () => {
@@ -36,6 +36,35 @@ function createWindow(): void {
   }
 }
 
+function createWindowWithPath(path: string): void {
+  const mainWindow = new BrowserWindow({
+    width: 900,
+    height: 670,
+    show: false,
+    autoHideMenuBar: true,
+    ...(process.platform === 'linux' ? { icon } : {}),
+    webPreferences: {
+      preload: join(__dirname, '../preload/index.js'),
+      sandbox: false
+    },
+  })
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show()
+  })
+
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url)
+    return { action: 'deny' }
+  })
+
+  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'] + "/" + path + ".html")
+  } else {
+    mainWindow.loadFile(join(__dirname, `../renderer/${path}.html`))
+  }
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -52,6 +81,17 @@ app.whenReady().then(async () => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+  
+  ipcMain.on('open-window', (_, path: string) => createWindowWithPath(path));
+
+  ipcMain.on('message', (_, message: string) => {
+    console.log(message)
+
+    BrowserWindow.getAllWindows().forEach(window => {
+      window.webContents.send('message', message)
+    });
+  });
+
   ipcMain.handle('db:execute', execute)
 
   await runMigrate()
