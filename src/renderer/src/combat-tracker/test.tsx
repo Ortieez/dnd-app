@@ -3,7 +3,7 @@ import { useEffect } from "react"
 function App(): JSX.Element {
 
     useEffect(() => {
-        const messageListener = (event, arg) => {
+        const messageListener = (_event, arg) => {
             console.log(arg); // Log the message
         };
 

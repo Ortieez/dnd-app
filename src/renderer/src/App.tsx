@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react"
-import { database } from "./db"
-import { posts } from "../../db/schema"
-
 function App(): JSX.Element {
 
 
