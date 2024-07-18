@@ -81,7 +81,7 @@ app.whenReady().then(async () => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
-  
+
   ipcMain.on('open-window', (_, path: string) => createWindowWithPath(path));
 
   ipcMain.on('message', (_, message: string) => {
@@ -95,6 +95,13 @@ app.whenReady().then(async () => {
   ipcMain.handle('db:execute', execute)
 
   await runMigrate()
+
+  // let test = await getListOfDownloadablePacks();
+
+  // if (test === 0) {
+  //   await seedDownloadablePacks();
+  // }
+
   createWindow()
 
   app.on('activate', function () {
@@ -115,3 +122,14 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+// // FIXME: Implement the following functions
+// const getListOfDownloadablePacks = async (): number => {
+//   // throw not implemented
+//   return 0;
+// }
+
+// // FIXME: Implement the following functions
+// const seedDownloadablePacks = async (): void => {
+//   // throw not implemented
+// }

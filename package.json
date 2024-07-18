@@ -1,9 +1,9 @@
 {
-  "name": "sqlite-demo",
+  "name": "dnd-app",
+  "description": "D&D App for managing characters, fights, monsters, spells, etc. And mostly initiative tracker.",
   "version": "0.0.1",
-  "description": "An Electron application with React and TypeScript",
+  "author": "Adam Lipert <a.lipert@protonmail.com>",
   "main": "./out/main/index.js",
-  "author": "example.com",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",
@@ -16,14 +16,14 @@
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win",
+    "build:win": "yarn install && yarn run build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
     "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
-    "better-sqlite3": "^9.6.0",
+    "better-sqlite3": "^11.1.2",
     "drizzle-orm": "^0.30.10"
   },
   "devDependencies": {

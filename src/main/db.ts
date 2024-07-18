@@ -37,7 +37,11 @@ export const execute = async (_e, sqlstr, params, method) => {
 }
 
 export const runMigrate = async () => {
-  migrate(db, {
-    migrationsFolder: path.join(__dirname, '../../drizzle')
-  })
+  try {
+    await migrate(db, {
+      migrationsFolder: path.join(__dirname, '../../drizzle')
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
