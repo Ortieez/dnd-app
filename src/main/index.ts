@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { execute, runMigrate } from './db'
+import { execute, runMigrate, seedDownloadablePacks } from './db'
 
 function createWindow(): void {
   // Create the browser window.
@@ -96,11 +96,7 @@ app.whenReady().then(async () => {
 
   await runMigrate()
 
-  // let test = await getListOfDownloadablePacks();
-
-  // if (test === 0) {
-  //   await seedDownloadablePacks();
-  // }
+  await seedDownloadablePacks();
 
   createWindow()
 
@@ -122,14 +118,3 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
-
-// // FIXME: Implement the following functions
-// const getListOfDownloadablePacks = async (): number => {
-//   // throw not implemented
-//   return 0;
-// }
-
-// // FIXME: Implement the following functions
-// const seedDownloadablePacks = async (): void => {
-//   // throw not implemented
-// }
