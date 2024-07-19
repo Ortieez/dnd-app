@@ -17,7 +17,8 @@ export const packs = sqliteTable("packs", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
   url: text("url").notNull(),
-  downloaded: integer("downloaded", { mode: "boolean" }).default(false),
+  downloaded: integer("downloaded", { mode: "boolean" }).default(false).notNull(),
+  packType: text("packType").notNull(),
 });
 
 export const spells = sqliteTable("spells", {

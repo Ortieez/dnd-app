@@ -8,6 +8,22 @@ export interface Open5eRequest<RequestData> {
     results: RequestData[]
 }
 
+export enum PackType {
+    Spell = "spell",
+    SpellList = "spell_list",
+    Monster = "monster",
+    Background = "background",
+    Plane = "plane",
+    Section = "section",
+    Feat = "feat",
+    Condition = "condition",
+    Race = "race",
+    Class = "class",
+    MagicItem = "magic_item",
+    Weapon = "weapon",
+    Armor = "armor"
+}
+
 export interface APISpell {
     slug: string
     name: string

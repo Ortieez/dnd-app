@@ -5,7 +5,7 @@ import * as schema from '../db/schema'
 import fs from 'fs'
 import { app } from 'electron'
 import path from 'path'
-import { PackInsert } from './types'
+import { PackInsert, PackType } from './types'
 
 const dbPath = import.meta.env.DEV ? 'sqlite.db' : path.join(app.getPath('userData'), 'data.db')
 
@@ -49,20 +49,58 @@ export const runMigrate = async () => {
 
 export const seedDownloadablePacks = async () => {
   const packs = {
-    "spells": "https://api.open5e.com/v1/spells/",
-    "spelllist": "https://api.open5e.com/v1/spelllist/",
-    "monsters": "https://api.open5e.com/v1/monsters/",
-    "documents": "https://api.open5e.com/v1/documents/",
-    "backgrounds": "https://api.open5e.com/v1/backgrounds/",
-    "planes": "https://api.open5e.com/v1/planes/",
-    "sections": "https://api.open5e.com/v1/sections/",
-    "feats": "https://api.open5e.com/v1/feats/",
-    "conditions": "https://api.open5e.com/v1/conditions/",
-    "races": "https://api.open5e.com/v1/races/",
-    "classes": "https://api.open5e.com/v1/classes/",
-    "magicitems": "https://api.open5e.com/v1/magicitems/",
-    "weapons": "https://api.open5e.com/v1/weapons/",
-    "armor": "https://api.open5e.com/v1/armor/",
+    "spells": {
+      "url": "https://api.open5e.com/v1/spells/?format=json",
+      "packType": PackType.Spell,
+    },
+    "spelllist": {
+      "url": "https://api.open5e.com/v1/spelllist/?format=json",
+      "packType": PackType.SpellList,
+    },
+    "monsters": {
+      "url": "https://api.open5e.com/v1/monsters/?format=json",
+      "packType": PackType.Monster,
+    },
+    "backgrounds": {
+      "url": "https://api.open5e.com/v1/backgrounds/?format=json",
+      "packType": PackType.Background,
+    },
+    "planes": {
+      "url": "https://api.open5e.com/v1/planes/?format=json",
+      "packType": PackType.Plane,
+    },
+    "sections": {
+      "url": "https://api.open5e.com/v1/sections/?format=json",
+      "packType": PackType.Section,
+    },
+    "feats": {
+      "url": "https://api.open5e.com/v1/feats/?format=json",
+      "packType": PackType.Feat,
+    },
+    "conditions": {
+      "url": "https://api.open5e.com/v1/conditions/?format=json",
+      "packType": PackType.Condition,
+    },
+    "races": {
+      "url": "https://api.open5e.com/v1/races/?format=json",
+      "packType": PackType.Race,
+    },
+    "classes": {
+      "url": "https://api.open5e.com/v1/classes/?format=json",
+      "packType": PackType.Class,
+    },
+    "magicitems": {
+      "url": "https://api.open5e.com/v1/magicitems/?format=json",
+      "packType": PackType.MagicItem,
+    },
+    "weapons": {
+      "url": "https://api.open5e.com/v1/weapons/?format=json",
+      "packType": PackType.Weapon,
+    },
+    "armor": {
+      "url": "https://api.open5e.com/v1/armor/?format=json",
+      "packType": PackType.Armor,
+    },
   }
 
   const packsInDB = await db.select().from(schema.packs);
@@ -71,7 +109,8 @@ export const seedDownloadablePacks = async () => {
     for (const packName in packs) {
       const pack: PackInsert = {
         name: packName,
-        url: packs[packName],
+        url: packs[packName].url,
+        packType: packs[packName].packType,
         downloaded: false,
       }
 
