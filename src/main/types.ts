@@ -58,8 +58,8 @@ export interface APISpell {
 }
 
 export interface APISpellList {
-    class_slug: string
-    class_name: string
+    slug: string
+    name: string
     desc: string
     spells: string[]
     document__slug: string
@@ -104,14 +104,14 @@ export interface APIMonster {
     languages: string
     challenge_rating: string
     cr: number
-    actions: Action[]
+    actions?: Action[]
     bonus_actions?: BonusAction[]
     reactions?: Reaction[]
     legendary_desc?: string
     legendary_actions?: LegendaryAction[]
-    special_abilities: SpecialAbility[]
+    special_abilities?: SpecialAbility[]
     spell_list: string[]
-    page_no: number
+    page_no?: number
     environments: string[]
     img_main?: string
 }
@@ -119,10 +119,13 @@ export interface APIMonster {
 export interface MonsterSpeed {
     swim?: number
     burrow?: number
-    walk: number
+    walk?: number
     hover?: boolean
     fly?: number
     climb?: number
+    lightwalking?: number
+    "bur."?: number
+    notes?: string
 }
 
 export interface Skills {
@@ -147,11 +150,29 @@ export interface Skills {
     arcana?: number
     nature?: number
     acrobatics?: number
+    History?: number
+    Insight?: number
+    Arcana?: number
+    Acrobatics?: number
+    Intimidation?: number
+    Athletics?: number
+    investigation?: number
+    Medicine?: number
+    Investigation?: number
+    Nature?: number
+    Survival?: number
+    "Animal Handling"?: number
+    "Sleight of Hand"?: number
+    Religion?: number
+    darkvision?: number
+    sleight?: number
+    animal?: number
+    engineering?: number
 }
 
 export interface Action {
-    name: string
     desc?: string
+    name: string
     attack_bonus?: number
     damage_dice?: string
     damage_bonus?: number
@@ -160,23 +181,30 @@ export interface Action {
 
 export interface BonusAction {
     name: string
-    desc: string
+    desc?: string
+    description?: string
 }
 
 export interface Reaction {
     name: string
-    desc: string
+    desc?: string
+    description?: string
 }
 
 export interface LegendaryAction {
+    desc?: string
     name: string
-    desc: string
+    description?: string
+    attack_bonus?: number
+    damage_dice?: string
 }
 
 export interface SpecialAbility {
     name: string
     desc?: string
     description?: string
+    attack_bonus?: number
+    damage_dice?: string
 }
 
 

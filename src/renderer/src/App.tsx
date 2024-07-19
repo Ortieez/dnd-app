@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "@tanstack/react-query"
-import { downloadPackAccordingly, getPacks } from "./services/packsController";
+import { downloadPackAccordingly, getPacks, processData } from "./services/packsController";
 import { queryKeys } from "./queryKeys/keys";
-import { APISpell, Open5eRequest, PackType } from "../../main/types";
-import { createManySpells, createSpell, parseSpellsFromAPI } from "./services/spellsController";
+import { APIRace, APISection, APISpell, APISpellList, PackType } from "../../main/types";
+import { createManySpells, parseSpellsFromAPI } from "./services/spellsController";
+import { createManySpellLists, parseSpellListsFromAPI } from "./services/spellListsController";
+import { createManySections, parseSectionsFromAPI } from "./services/sectionsController";
 
 const queryClient = new QueryClient();
 
@@ -31,16 +33,7 @@ function DownloadPacks(): JSX.Element {
 
   const handleDownload = async (id: number, packType: string) => {
     let data = await downloadPackAccordingly(id, packType as PackType);
-
-    switch (packType) {
-      case PackType.Spell:
-        let preParse = data as unknown as APISpell[];
-        let parsed = parseSpellsFromAPI(preParse);
-
-        await createManySpells(parsed)
-
-        break;
-    }
+    await processData(packType as PackType, data);
 
     await queryClient.invalidateQueries({
       queryKey: queryKeys.packs.fetchAll,

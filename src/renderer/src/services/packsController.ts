@@ -2,6 +2,14 @@ import { PackInsert, Pack, Open5eRequest, APISpell, APISpellList, APIMonster, Pa
 import { packs } from '../../../db/schema';
 import { database } from '../db';
 import { eq } from 'drizzle-orm';
+import { createManySpells, parseSpellsFromAPI } from './spellsController';
+import { createManySections, parseSectionsFromAPI } from './sectionsController';
+import { createManySpellLists, parseSpellListsFromAPI } from './spellListsController';
+import { createManyRaces, parseRacesFromAPI } from './racesController';
+import { createManyMonsters, parseMonstersFromAPI } from './monstersController';
+import { createManyPlanes, parsePlanesFromAPI } from './planesController';
+import { createManyMagicItems, parseMagicItemsFromAPI } from './magicItemsController';
+import { createManyWeapons, parseWeaponsFromAPI } from './weaponsController';
 
 export const getPacks = async (): Promise<Pack[]> => {
     try {
@@ -105,35 +113,54 @@ export const downloadPack = async <TPackType>(id: number): Promise<TPackType[]> 
     return data;
 }
 
+type PackDownloadFunction = <TPackType>(id: number) => Promise<TPackType[]>;
+
+const packDownloaders: Record<PackType, PackDownloadFunction> = {
+    [PackType.Spell]: downloadPack,
+    [PackType.SpellList]: downloadPack,
+    [PackType.Monster]: downloadPack,
+    [PackType.Background]: downloadPack,
+    [PackType.Plane]: downloadPack,
+    [PackType.Section]: downloadPack,
+    [PackType.Feat]: downloadPack,
+    [PackType.Condition]: downloadPack,
+    [PackType.Race]: downloadPack,
+    [PackType.Class]: downloadPack,
+    [PackType.MagicItem]: downloadPack,
+    [PackType.Weapon]: downloadPack,
+    [PackType.Armor]: downloadPack,
+};
+
 export const downloadPackAccordingly = async (id: number, packType: PackType) => {
-    switch (packType) {
-        case PackType.Spell:
-            return await downloadPack<APISpell>(id);
-        case PackType.SpellList:
-            return await downloadPack<APISpellList>(id);
-        case PackType.Monster:
-            return await downloadPack<APIMonster>(id);
-        case PackType.Background:
-            return await downloadPack<APIBackground>(id);
-        case PackType.Plane:
-            return await downloadPack<APIPlane>(id);
-        case PackType.Section:
-            return await downloadPack<APISection>(id);
-        case PackType.Feat:
-            return await downloadPack<APIFeat>(id);
-        case PackType.Condition:
-            return await downloadPack<APICondition>(id);
-        case PackType.Race:
-            return await downloadPack<APIRace>(id);
-        case PackType.Class:
-            return await downloadPack<APIClass>(id);
-        case PackType.MagicItem:
-            return await downloadPack<APIMagicItem>(id);
-        case PackType.Weapon:
-            return await downloadPack<APIWeapon>(id);
-        case PackType.Armor:
-            return await downloadPack<APIArmor>(id);
-        default:
-            return null;
+    const downloadFunction = packDownloaders[packType];
+    if (!downloadFunction) {
+        console.error(`No download function available for pack type: ${packType}`);
+        return null;
     }
-}
+    return downloadFunction(id);
+};
+
+const packTypeProcessors = {
+    [PackType.Spell]: async (data: unknown) => await createManySpells(parseSpellsFromAPI(data as APISpell[])),
+    [PackType.SpellList]: async (data: unknown) => await createManySpellLists(parseSpellListsFromAPI(data as APISpellList[])),
+    [PackType.Section]: async (data: unknown) => await createManySections(parseSectionsFromAPI(data as APISection[])),
+    [PackType.Race]: async (data: unknown) => await createManyRaces(parseRacesFromAPI(data as APIRace[])),
+    [PackType.Monster]: async (data: unknown) => await createManyMonsters(parseMonstersFromAPI(data as APIMonster[])),
+    [PackType.Background]: async (data: unknown) => await createManyBackgrounds(parseBackgroundsFromAPI(data as APIBackground[])),
+    [PackType.Plane]: async (data: unknown) => await createManyPlanes(parsePlanesFromAPI(data as APIPlane[])),
+    [PackType.Feat]: async (data: unknown) => await createManyFeats(parseFeatsFromAPI(data as APIFeat[])),
+    [PackType.Condition]: async (data: unknown) => await createManyConditions(parseConditionsFromAPI(data as APICondition[])),
+    [PackType.Class]: async (data: unknown) => await createManyClasses(parseClassesFromAPI(data as APIClass[])),
+    [PackType.MagicItem]: async (data: unknown) => await createManyMagicItems(parseMagicItemsFromAPI(data as APIMagicItem[])),
+    [PackType.Weapon]: async (data: unknown) => await createManyWeapons(parseWeaponsFromAPI(data as APIWeapon[])),
+    [PackType.Armor]: async (data: unknown) => await createManyArmors(parseArmorsFromAPI(data as APIArmor[])),
+};
+
+export const processData = async (packType: PackType, data) => {
+    const process = packTypeProcessors[packType];
+    if (process) {
+        await process(data);
+    } else {
+        console.error("Unsupported pack type:", packType);
+    }
+};

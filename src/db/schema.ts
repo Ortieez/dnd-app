@@ -92,14 +92,14 @@ export const monsters = sqliteTable("monsters", {
   languages: text("languages").notNull(),
   challenge_rating: text("challenge_rating").notNull(),
   cr: integer("cr").notNull(),
-  actions: text('actions', { mode: 'json' }).$type<Action[]>().notNull(),
+  actions: text('actions', { mode: 'json' }).$type<Action[]>(),
   bonus_actions: text('bonus_actions', { mode: 'json' }).$type<BonusAction[]>(),
   reactions: text('reactions', { mode: 'json' }).$type<Reaction[]>(),
   legendary_desc: text("legendary_desc"),
   legendary_actions: text('legendary_actions', { mode: 'json' }).$type<LegendaryAction[]>(),
-  special_abilities: text('special_abilities', { mode: 'json' }).$type<SpecialAbility[]>().notNull(),
+  special_abilities: text('special_abilities', { mode: 'json' }).$type<SpecialAbility[]>(),
   spell_list: text('spell_list', { mode: 'json' }).$type<string[]>().notNull(),
-  page_no: integer("page_no").notNull(),
+  page_no: integer("page_no"),
   environments: text('environments', { mode: 'json' }).$type<string[]>().notNull(),
 });
 
@@ -205,7 +205,7 @@ export const weapons = sqliteTable("weapons", {
   category: text("category").notNull(),
   damage_dice: text("damage_dice").notNull(),
   damage_type: text("damage_type").notNull(),
-  properties: text('properties', { mode: 'json' }).$type<Archetype[]>(),
+  properties: text('properties', { mode: 'json' }).$type<string[]>(),
   cost: text("cost").notNull(),
   weight: text("weight").notNull(),
 });
