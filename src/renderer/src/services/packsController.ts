@@ -10,6 +10,11 @@ import { createManyMonsters, parseMonstersFromAPI } from './monstersController';
 import { createManyPlanes, parsePlanesFromAPI } from './planesController';
 import { createManyMagicItems, parseMagicItemsFromAPI } from './magicItemsController';
 import { createManyWeapons, parseWeaponsFromAPI } from './weaponsController';
+import { createManyArmors, parseArmorsFromAPI } from './armorsController';
+import { createManyBackgrounds, parseBackgroundsFromAPI } from './backgroundsController';
+import { createManyClasses, parseClassesFromAPI } from './classesController';
+import { createManyConditions, parseConditionsFromAPI } from './conditionsController';
+import { createManyFeats, parseFeatsFromAPI } from './featsController';
 
 export const getPacks = async (): Promise<Pack[]> => {
     try {
