@@ -42,9 +42,11 @@
     "@tiptap/react": "^2.5.4",
     "@tiptap/starter-kit": "^2.5.4",
     "better-sqlite3": "^11.1.2",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.12",
     "drizzle-orm": "^0.30.10",
     "embla-carousel-react": "^8.1.7",
+    "mantine-react-table": "^2.0.0-beta.6",
     "react-loader-spinner": "^6.1.6",
     "recharts": "2"
   },

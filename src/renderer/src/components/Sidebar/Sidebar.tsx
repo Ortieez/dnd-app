@@ -1,19 +1,12 @@
-import { useState } from 'react';
-import { Center, Tooltip, UnstyledButton, Stack, rem, useMantineColorScheme } from '@mantine/core';
+import { Center, Tooltip, UnstyledButton, Stack, rem, useMantineColorScheme, Collapse } from '@mantine/core';
 import {
   IconHome2,
-  IconGauge,
-  IconDeviceDesktopAnalytics,
   IconFingerprint,
-  IconCalendarStats,
-  IconUser,
-  IconSettings,
-  IconLogout,
-  IconSwitchHorizontal,
   IconMoon,
   IconSun,
   IconPackage,
   IconHome,
+  IconShield,
 } from '@tabler/icons-react';
 import classes from './Sidebar.module.css';
 
@@ -35,12 +28,21 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
 }
 
 const mockdata = [
-  { icon: IconHome, label: 'Dashboard' },
+  { icon: IconHome, label: 'Combat Maker' },
   { icon: IconPackage, label: 'Packs' },
-  { icon: IconCalendarStats, label: 'Releases' },
-  { icon: IconUser, label: 'Account' },
-  { icon: IconFingerprint, label: 'Security' },
-  { icon: IconSettings, label: 'Settings' },
+  { icon: IconShield, label: 'Armors' },
+  { icon: IconFingerprint, label: 'Backgrounds' },
+  { icon: IconFingerprint, label: 'Classes' },
+  { icon: IconFingerprint, label: 'Conditions' },
+  { icon: IconFingerprint, label: 'Feats' },
+  { icon: IconFingerprint, label: 'Magic Items' },
+  { icon: IconFingerprint, label: 'Monsters' },
+  { icon: IconFingerprint, label: 'Planes' },
+  { icon: IconFingerprint, label: 'Races' },
+  { icon: IconFingerprint, label: 'Sections' },
+  { icon: IconFingerprint, label: 'Spell Lists' },
+  { icon: IconFingerprint, label: 'Spells' },
+  { icon: IconFingerprint, label: 'Weapons' },
 ];
 
 export function Sidebar({ active, setActive }) {
@@ -64,17 +66,13 @@ export function Sidebar({ active, setActive }) {
   return (
     <div className='flex flex-col h-screen'>
       <nav className={classes.navbar + " h-full"}>
-        <Center>
-          {/* <MantineLogo type="mark" size={30} /> */}
-        </Center>
-
         <div className={classes.navbarMain}>
-          <Stack justify="center" gap={0}>
+          <Stack justify="center" gap={5}>
             {links}
           </Stack>
         </div>
 
-        <Stack justify="center" gap={0}>
+        <Stack justify="center" gap={5}>
           {/* <NavbarLink icon={IconSwitchHorizontal} label="Change account" /> */}
           {/* <NavbarLink icon={IconLogout} label="Logout" /> */}
           <NavbarLink onClick={toggleMode} icon={icon} label="Mode switch" />

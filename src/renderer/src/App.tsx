@@ -8,9 +8,12 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
 import '@mantine/code-highlight/styles.css';
+import 'mantine-react-table/styles.css';
+
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { useState } from "react";
 import DownloadPacks from "./components/PacksDownloader";
+import Example from "./components/Table/Table";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +33,13 @@ function renderTabContent(selectedTab: number): JSX.Element {
           <DownloadPacks />
         </div>
       );
+    case 2:
+      return (
+        <div className="flex w-full">
+          <Example />
+        </div>
+      );
+
     default:
       return <div>Select a tab</div>;
   }

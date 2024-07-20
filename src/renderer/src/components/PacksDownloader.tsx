@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { downloadPackAccordingly, getPacks, processData } from "@renderer/services/packsController";
 import PackCard from "./Card/Card";
 import { useEffect, useState } from "react";
-import { Modal } from "@mantine/core";
+import { Modal, ScrollArea } from "@mantine/core";
 import { Grid } from "react-loader-spinner";
 
 export default function DownloadPacks(): JSX.Element {
@@ -42,25 +42,27 @@ export default function DownloadPacks(): JSX.Element {
         };
     }, []);
 
-
-
     return (
         <div>
             {
                 isLoading ? <p>Loading please wait...</p>
                     : (
-                        <div className="w-full h-screen flex flex-col p-10 gap-10 overflow-y-scroll">
+                        <div className="w-full h-screen flex flex-col p-10 gap-10">
                             <div>
                                 <h1 className="text-lg font-bold">Download Packs</h1>
                             </div>
+                            <ScrollArea>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-                                {
-                                    data?.map((pack) => (
-                                        <PackCard key={pack.id} handleDownload={() => handleDownload(pack.id, pack.packType)} pack={pack} isOffline={isOffline} />
-                                    ))
-                                }
-                            </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+                                    {
+                                        data?.map((pack) => (
+                                            <PackCard key={pack.id} handleDownload={() => handleDownload(pack.id, pack.packType)} pack={pack} isOffline={isOffline} />
+                                        ))
+                                    }
+                                </div>
+                            </ScrollArea>
+
                         </div>
                     )
             }

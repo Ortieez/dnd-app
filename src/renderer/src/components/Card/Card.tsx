@@ -18,13 +18,13 @@ function PackCard({ handleDownload, pack, isOffline }) {
 
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
-            <Card.Section className='h-[160px] overflow-hidden'>
+            <Card.Section className='max-h-[100px] overflow-hidden'>
                 {
                     image !== null && (
                         <Image
                             src={image}
                             width={160}
-                            className='w-fit overflow-hidden select-none'
+                            className='w-fit object-fill'
                             alt={pack.name}
                         />
                     )
