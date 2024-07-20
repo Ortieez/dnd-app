@@ -49,57 +49,83 @@ export const runMigrate = async () => {
 
 export const seedDownloadablePacks = async () => {
   const packs = {
-    "spells": {
+    "Spells": {
       "url": "https://api.open5e.com/v1/spells/?format=json",
       "packType": PackType.Spell,
+      "imagePath": "spells",
+      "description": "A pack that contains around 1400+ spells from open5e",
     },
-    "spelllist": {
+    "Spell Lists": {
       "url": "https://api.open5e.com/v1/spelllist/?format=json",
       "packType": PackType.SpellList,
+      "imagePath": "spelllists",
+      "description": "A pack that contains spell lists for each class",
     },
-    "monsters": {
+    "Monsters": {
       "url": "https://api.open5e.com/v1/monsters/?format=json",
       "packType": PackType.Monster,
+      "imagePath": "monsters",
+      "description": "A pack that contains around 2000+ monsters from open5e",
     },
-    "backgrounds": {
+    "Backgrounds": {
       "url": "https://api.open5e.com/v1/backgrounds/?format=json",
       "packType": PackType.Background,
+      "imagePath": "backgrounds",
+      "description": "A pack that contains backgrounds from open5e",
     },
-    "planes": {
+    "Planes": {
       "url": "https://api.open5e.com/v1/planes/?format=json",
       "packType": PackType.Plane,
+      "imagePath": "planes",
+      "description": "A pack that contains planes from open5e",
     },
-    "sections": {
+    "Sections": {
       "url": "https://api.open5e.com/v1/sections/?format=json",
       "packType": PackType.Section,
+      "imagePath": "sections",
+      "description": "A pack that contains sections from open5e",
     },
-    "feats": {
+    "Feats": {
       "url": "https://api.open5e.com/v1/feats/?format=json",
       "packType": PackType.Feat,
+      "imagePath": "feats",
+      "description": "A pack that contains feats from open5e",
     },
-    "conditions": {
+    "Conditions": {
       "url": "https://api.open5e.com/v1/conditions/?format=json",
       "packType": PackType.Condition,
+      "imagePath": "conditions",
+      "description": "A pack that contains conditions from open5e",
     },
-    "races": {
+    "Races": {
       "url": "https://api.open5e.com/v1/races/?format=json",
       "packType": PackType.Race,
+      "imagePath": "races",
+      "description": "A pack that contains races from open5e",
     },
-    "classes": {
+    "Classes": {
       "url": "https://api.open5e.com/v1/classes/?format=json",
       "packType": PackType.Class,
+      "imagePath": "classes",
+      "description": "A pack that contains classes from open5e",
     },
-    "magicitems": {
+    "Magic Items": {
       "url": "https://api.open5e.com/v1/magicitems/?format=json",
       "packType": PackType.MagicItem,
+      "imagePath": "magicitems",
+      "description": "A pack that contains magic items from open5e",
     },
-    "weapons": {
+    "Weapons": {
       "url": "https://api.open5e.com/v1/weapons/?format=json",
       "packType": PackType.Weapon,
+      "imagePath": "weapons",
+      "description": "A pack that contains weapons from open5e",
     },
-    "armor": {
+    "Armors": {
       "url": "https://api.open5e.com/v1/armor/?format=json",
       "packType": PackType.Armor,
+      "imagePath": "armors",
+      "description": "A pack that contains armors from open5e",
     },
   }
 
@@ -111,6 +137,8 @@ export const seedDownloadablePacks = async () => {
         name: packName,
         url: packs[packName].url,
         packType: packs[packName].packType,
+        image: packs[packName].imagePath,
+        description: packs[packName].description,
         downloaded: false,
       }
 

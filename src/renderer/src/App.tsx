@@ -1,64 +1,61 @@
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "@tanstack/react-query"
 import { downloadPackAccordingly, getPacks, processData } from "./services/packsController";
 import { queryKeys } from "./queryKeys/keys";
-import { APIRace, APISection, APISpell, APISpellList, PackType } from "../../main/types";
-import { createManySpells, parseSpellsFromAPI } from "./services/spellsController";
-import { createManySpellLists, parseSpellListsFromAPI } from "./services/spellListsController";
-import { createManySections, parseSectionsFromAPI } from "./services/sectionsController";
+import { PackType } from "../../main/types";
+import { createTheme, MantineProvider } from '@mantine/core';
+
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/dropzone/styles.css';
+import '@mantine/code-highlight/styles.css';
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { useState } from "react";
+import DownloadPacks from "./components/PacksDownloader";
 
 const queryClient = new QueryClient();
 
+const theme = createTheme({});
+
+function renderTabContent(selectedTab: number): JSX.Element {
+  switch (selectedTab) {
+    case 0:
+      return (
+        <div>
+          <h1>Dashboard</h1>
+        </div>
+      );
+    case 1:
+      return (
+        <div>
+          <DownloadPacks />
+        </div>
+      );
+    default:
+      return <div>Select a tab</div>;
+  }
+}
+
 function App(): JSX.Element {
+  const [selectedTab, setSelectedTab] = useState(0);
+
+
   return (
 
     <QueryClientProvider client={queryClient}>
-      <div>
-        <div className="bg-red-200 size-8"></div>
-        {/* <button onClick={() => window.electron.ipcRenderer.send("open-window", "combat-tracker")}>asdsa</button>
+      <MantineProvider theme={theme}>
+        <div className="flex max-h-screen flex-row overflow-hidden">
+          <Sidebar active={selectedTab} setActive={setSelectedTab} />
+          {/* <button onClick={() => window.electron.ipcRenderer.send("open-window", "combat-tracker")}>asdsa</button>
       <button onClick={() => window.electron.ipcRenderer.send("message", "hii")}>asdsasdasdasd</button> */}
+          {renderTabContent(selectedTab)}
 
+          <div className="mt-10 mb-10">
 
-        <div className="mt-10 mb-10">
-          <DownloadPacks />
+          </div>
         </div>
-      </div>
+        {/* Your app here */}
+      </MantineProvider>
     </QueryClientProvider>
-  )
-}
-
-function DownloadPacks(): JSX.Element {
-  const queryClient = useQueryClient()
-
-  const { data, isLoading } = useQuery({ queryKey: queryKeys.packs.fetchAll, queryFn: getPacks }, queryClient);
-
-  const handleDownload = async (id: number, packType: string) => {
-    let data = await downloadPackAccordingly(id, packType as PackType);
-    await processData(packType as PackType, data);
-
-    await queryClient.invalidateQueries({
-      queryKey: queryKeys.packs.fetchAll,
-    });
-  }
-
-  return (
-    <div>
-      {
-        isLoading ? <p>Loading please wait...</p>
-          : (
-            <div className="flex flex-col gap-4">
-              {
-                data?.map((pack) => (
-                  <div key={pack.id}>
-                    {
-                      pack.downloaded ? <p>✅ Already downloaded</p> : <button onClick={() => handleDownload(pack.id, pack.packType)}>Download {pack.name}</button>
-                    }
-                  </div>
-                ))
-              }
-            </div>
-          )
-      }
-    </div>
   )
 }
 

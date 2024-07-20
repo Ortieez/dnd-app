@@ -1,4 +1,4 @@
-import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
+import { text, integer, sqliteTable, blob } from "drizzle-orm/sqlite-core";
 import { Action, AtributeScoreImprovement, BonusAction, LegendaryAction, RaceSpeed, Reaction, Skills, SpecialAbility, MonsterSpeed, Subrace, Archetype } from "../main/types"
 
 export const users = sqliteTable("user", {
@@ -17,6 +17,8 @@ export const packs = sqliteTable("packs", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
   url: text("url").notNull(),
+  image: text("image").notNull(),
+  description: text("description").notNull(),
   downloaded: integer("downloaded", { mode: "boolean" }).default(false).notNull(),
   packType: text("packType").notNull(),
 });
