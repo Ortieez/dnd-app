@@ -7,90 +7,79 @@ import {
     useMantineReactTable,
     type MRT_ColumnDef,
 } from 'mantine-react-table';
+import { Armor } from '../../../../main/types';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@renderer/queryKeys/keys';
+import { getArmors } from '@renderer/services/armorsController';
+import { Grid } from 'react-loader-spinner';
 
-type Person = {
-    name: {
-        firstName: string;
-        lastName: string;
-    };
-    address: string;
-    city: string;
-    state: string;
-};
+const ArmorTable = () => {
+    const queryClient = useQueryClient();
 
-//nested data is ok, see accessorKeys in ColumnDef below
-const data: Person[] = [
-    {
-        name: {
-            firstName: 'Zachary',
-            lastName: 'Davis',
-        },
-        address: '261 Battle Ford',
-        city: 'Columbus',
-        state: 'Ohio',
-    },
-    {
-        name: {
-            firstName: 'Robert',
-            lastName: 'Smith',
-        },
-        address: '566 Brakus Inlet',
-        city: 'Westerville',
-        state: 'West Virginia',
-    },
-    {
-        name: {
-            firstName: 'Kevin',
-            lastName: 'Yan',
-        },
-        address: '7777 Kuhic Knoll',
-        city: 'South Linda',
-        state: 'West Virginia',
-    },
-    {
-        name: {
-            firstName: 'John',
-            lastName: 'Upton',
-        },
-        address: '722 Emie Stream',
-        city: 'Huntington',
-        state: 'Washington',
-    },
-    {
-        name: {
-            firstName: 'Nathan',
-            lastName: 'Harris',
-        },
-        address: '1 Kuhic Knoll',
-        city: 'Ohiowa',
-        state: 'Nebraska',
-    },
-];
+    const { data, isLoading } = useQuery({ queryKey: queryKeys.armors.fetchAll, queryFn: getArmors, initialData: [] }, queryClient);
 
-const Example = () => {
+    if (isLoading) {
+        return <div className='w-full h-screen justify-center items-center'>
+            <Grid
+                visible={true}
+                height="40"
+                width="40"
+                color="#1560BD"
+                ariaLabel="grid-loading"
+                radius="12.5"
+                wrapperStyle={{}}
+                wrapperClass="grid-wrapper"
+            />
+        </div>
+    }
+
     //should be memoized or stable
-    const columns = useMemo<MRT_ColumnDef<Person>[]>(
+    const columns = useMemo<MRT_ColumnDef<Armor>[]>(
         () => [
             {
-                accessorKey: 'name.firstName', //access nested data with dot notation
-                header: 'First Name',
+                accessorKey: 'name',
+                header: 'Name',
             },
             {
-                accessorKey: 'name.lastName',
-                header: 'Last Name',
+                accessorKey: 'category',
+                header: 'Category',
             },
             {
-                accessorKey: 'address', //normal accessorKey
-                header: 'Address',
+                accessorKey: 'base_ac',
+                header: 'Base AC',
             },
             {
-                accessorKey: 'city',
-                header: 'City',
+                accessorKey: 'plus_dex_mod',
+                header: 'Plus Dex Mod',
             },
             {
-                accessorKey: 'state',
-                header: 'State',
+                accessorKey: "plus_wis_mod",
+                header: "Plus Wis Mod",
             },
+            {
+                accessorKey: "plus_con_mod",
+                header: "Plus Con Mod",
+            },
+            {
+                accessorKey: "plus_flat_mod",
+                header: "Plus Flat Mod",
+            },
+            {
+                accessorKey: "plus_max",
+                header: "Plus Max",
+            },
+            {
+                accessorKey: "strength_requirement",
+                header: "Strength Requirement",
+            },
+            {
+                accessorKey: "cost",
+                header: "Cost",
+            },
+            {
+                accessorKey: "stealth_disadvantage",
+                header: "Stealth Disadvantage",
+            }
         ],
         [],
     );
@@ -100,7 +89,7 @@ const Example = () => {
         data,
     });
 
-    return <MantineReactTable table={table} />;
+    return <MantineReactTable table={table} enableTopToolbar={false} />;
 };
 
-export default Example;
+export default ArmorTable;

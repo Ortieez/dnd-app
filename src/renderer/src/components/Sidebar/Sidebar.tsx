@@ -1,4 +1,4 @@
-import { Center, Tooltip, UnstyledButton, Stack, rem, useMantineColorScheme, Collapse } from '@mantine/core';
+import { Center, Tooltip, UnstyledButton, Stack, rem, useMantineColorScheme, Collapse, ScrollArea } from '@mantine/core';
 import {
   IconHome2,
   IconFingerprint,

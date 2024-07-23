@@ -13,7 +13,7 @@ import 'mantine-react-table/styles.css';
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { useState } from "react";
 import DownloadPacks from "./components/PacksDownloader";
-import Example from "./components/Table/Table";
+import ArmorTable from "./components/Table/Table";
 
 const queryClient = new QueryClient();
 
@@ -35,8 +35,8 @@ function renderTabContent(selectedTab: number): JSX.Element {
       );
     case 2:
       return (
-        <div className="flex w-full">
-          <Example />
+        <div className="flex w-screen max-w-screen">
+          <ArmorTable />
         </div>
       );
 
